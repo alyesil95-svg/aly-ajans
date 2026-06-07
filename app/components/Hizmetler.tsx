@@ -58,11 +58,11 @@ const directions = [
   { x: 120 }, { x: -120 }, { x: 120 },
 ]
 
-function Card({ h, i }) {
-  const cardRef = useRef(null)
+function Card({ h, i }: { h: typeof hizmetler[0], i: number }) {
+  const cardRef = useRef<HTMLDivElement>(null)
   const [acik, setAcik] = useState(false)
 
-  function handleMouseMove(e) {
+  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     if (acik) return
     const card = cardRef.current
     if (!card) return
@@ -98,11 +98,8 @@ function Card({ h, i }) {
       onMouseLeave={handleMouseLeave}
       onClick={() => setAcik(!acik)}
       style={{
-        background: 'white',
-        borderRadius: '20px',
-        overflow: 'hidden',
-        cursor: 'pointer',
-        transition: 'box-shadow 0.15s ease',
+        background: 'white', borderRadius: '20px', overflow: 'hidden',
+        cursor: 'pointer', transition: 'box-shadow 0.15s ease',
         boxShadow: acik ? `0 20px 60px ${h.renk}33` : '0 4px 20px rgba(0,0,0,0.08)',
         border: acik ? `1.5px solid ${h.renk}55` : '1px solid rgba(0,0,0,0.06)',
       }}
@@ -170,19 +167,14 @@ function Card({ h, i }) {
                 }}
               >×</motion.button>
             </div>
-
             <h3 style={{
               fontSize: '24px', fontWeight: '900', color: '#111827',
               marginBottom: '1rem', background: `linear-gradient(135deg, ${h.renk}, #111827)`,
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'
             }}>{h.baslik}</h3>
-
-            <p style={{ fontSize: '14px', color: '#6b7280', lineHeight: '1.8', marginBottom: '1.5rem' }}>
-              {h.detay}
-            </p>
-
+            <p style={{ fontSize: '14px', color: '#6b7280', lineHeight: '1.8', marginBottom: '1.5rem' }}>{h.detay}</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {h.maddeler.map((madde, j) => (
+              {h.maddeler.map((madde: string, j: number) => (
                 <motion.div
                   key={j}
                   initial={{ opacity: 0, x: -20 }}
@@ -194,15 +186,11 @@ function Card({ h, i }) {
                     background: h.renk + '0a'
                   }}
                 >
-                  <div style={{
-                    width: '6px', height: '6px', borderRadius: '50%',
-                    background: h.renk, flexShrink: 0
-                  }} />
+                  <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: h.renk, flexShrink: 0 }} />
                   <span style={{ fontSize: '13px', color: '#374151', fontWeight: '500' }}>{madde}</span>
                 </motion.div>
               ))}
             </div>
-
             <motion.div
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
@@ -214,9 +202,7 @@ function Card({ h, i }) {
                 textAlign: 'center', cursor: 'pointer',
                 boxShadow: `0 8px 24px ${h.renk}44`
               }}
-            >
-              Teklif Al →
-            </motion.div>
+            >Teklif Al →</motion.div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -258,7 +244,6 @@ export default function Hizmetler() {
             style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: '900', color: '#111827' }}
           >Hizmetlerimiz</motion.h2>
         </motion.div>
-
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
           {hizmetler.map((h, i) => <Card key={h.baslik} h={h} i={i} />)}
         </div>

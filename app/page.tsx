@@ -38,7 +38,7 @@ function ScrollBar() {
 }
 
 function Loader({ onDone }: { onDone: () => void }) {
-  const canvasRef = useRef(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
   const [phase, setPhase] = useState(0)
   const [count, setCount] = useState(0)
 
@@ -62,9 +62,10 @@ function Loader({ onDone }: { onDone: () => void }) {
   }, [phase])
 
   useEffect(() => {
-    const canvas = canvasRef.current as HTMLCanvasElement
+    const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')
+    if (!ctx) return
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
     const cols = Math.floor(canvas.width / 20)
@@ -72,14 +73,14 @@ function Loader({ onDone }: { onDone: () => void }) {
     const chars = '01アイウエオカキALYAJANS</>{}[]'
     function draw() {
       ctx.fillStyle = 'rgba(8,8,8,0.06)'
-      ctx.fillRect(0, 0, canvas.width, canvas.height)
+      ctx.fillRect(0, 0, canvas!.width, canvas!.height)
       ctx.font = '12px monospace'
       drops.forEach((y, i) => {
         const char = chars[Math.floor(Math.random() * chars.length)]
         const alpha = Math.random() * 0.15 + 0.03
         ctx.fillStyle = `rgba(255,255,255,${alpha})`
         ctx.fillText(char, i * 20, y * 20)
-        if (y * 20 > canvas.height && Math.random() > 0.98) drops[i] = 0
+        if (y * 20 > canvas!.height && Math.random() > 0.98) drops[i] = 0
         drops[i] += 0.3
       })
       requestAnimationFrame(draw)
@@ -201,18 +202,20 @@ function Loader({ onDone }: { onDone: () => void }) {
 }
 
 function GlobalCanvas() {
-  const canvasRef = useRef(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')
+    if (!ctx) return
     function resize() {
+      if (!canvas) return
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
     }
     resize()
-    const dots = []
+    const dots: { x: number; y: number; dx: number; dy: number; r: number }[] = []
     for (let i = 0; i < 120; i++) {
       dots.push({
         x: Math.random() * canvas.width,
@@ -222,9 +225,10 @@ function GlobalCanvas() {
         r: Math.random() * 2.5 + 1
       })
     }
-    let mouse = { x: canvas.width / 2, y: canvas.height / 2 }
+    const mouse = { x: canvas.width / 2, y: canvas.height / 2 }
     window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY })
     function draw() {
+      if (!canvas || !ctx) return
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       dots.forEach(function(dot, i) {
         const distToMouse = Math.sqrt((dot.x - mouse.x) ** 2 + (dot.y - mouse.y) ** 2)
