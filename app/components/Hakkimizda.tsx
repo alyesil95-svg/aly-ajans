@@ -23,26 +23,12 @@ function Counter({ target, suffix }: { target: number, suffix: string }) {
 }
 
 export default function Hakkimizda() {
-  const ref = useRef(null)
-
   return (
-    <section id="hakkimizda" ref={ref} style={{
-      background: '#ffffff', padding: '8rem 2rem',
-      position: 'relative', overflow: 'hidden'
+    <section id="hakkimizda" style={{
+      background: 'transparent',
+      padding: '8rem 2rem',
+      position: 'relative', zIndex: 1
     }}>
-      <div style={{
-        position: 'absolute', top: '10%', left: '-10%',
-        width: '500px', height: '500px', borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(220,38,38,0.06) 0%, transparent 70%)',
-        pointerEvents: 'none'
-      }} />
-      <div style={{
-        position: 'absolute', bottom: '10%', right: '-10%',
-        width: '400px', height: '400px', borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(22,163,74,0.06) 0%, transparent 70%)',
-        pointerEvents: 'none'
-      }} />
-
       <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 10 }}>
 
         <motion.div
@@ -61,9 +47,9 @@ export default function Hakkimizda() {
             viewport={{ once: false }}
             style={{
               display: 'inline-block', padding: '6px 20px', borderRadius: '50px',
-              border: '1px solid rgba(220,38,38,0.3)', color: '#dc2626',
+              border: '1px solid rgba(220,38,38,0.4)', color: '#dc2626',
               fontSize: '12px', fontWeight: '600', letterSpacing: '3px',
-              textTransform: 'uppercase', marginBottom: '1.5rem'
+              textTransform: 'uppercase', marginBottom: '1.5rem', fontFamily: 'monospace'
             }}>Kimiz?</motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 40 }}
@@ -73,13 +59,13 @@ export default function Hakkimizda() {
             viewport={{ once: false }}
             style={{
               fontSize: 'clamp(2.5rem, 6vw, 5rem)',
-              fontWeight: '900', color: '#111827',
-              lineHeight: '1.1', marginBottom: '1.5rem'
+              fontWeight: '900', color: 'white',
+              lineHeight: '1.1', marginBottom: '1.5rem', fontFamily: 'monospace'
             }}
           >
             İzmir'in En Yaratıcı<br />
             <span style={{
-              background: 'linear-gradient(135deg, #dc2626, #16a34a)',
+              background: 'linear-gradient(135deg, #dc2626, #7c3aed)',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'
             }}>Dijital Ajansı</span>
           </motion.h2>
@@ -89,13 +75,14 @@ export default function Hakkimizda() {
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             viewport={{ once: false }}
-            style={{ color: '#6b7280', fontSize: '18px', maxWidth: '600px', margin: '0 auto', lineHeight: '1.8' }}
+            style={{ color: 'rgba(255,255,255,0.5)', fontSize: '18px', maxWidth: '600px', margin: '0 auto', lineHeight: '1.8' }}
           >
             Markaları dijital dünyada zirveye taşıyan, yaratıcılığı teknolojiyle buluşturan bir ekibiz.
           </motion.p>
         </motion.div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center', marginBottom: '6rem' }}>
+
           <motion.div
             initial={{ opacity: 0, x: -100, rotate: -3 }}
             whileInView={{ opacity: 1, x: 0, rotate: 0 }}
@@ -107,14 +94,15 @@ export default function Hakkimizda() {
             <div style={{
               borderRadius: '24px', overflow: 'hidden',
               position: 'relative', aspectRatio: '4/3',
-              boxShadow: '0 30px 80px rgba(0,0,0,0.15)'
+              boxShadow: '0 30px 80px rgba(0,0,0,0.5)',
+              border: '1px solid rgba(255,255,255,0.1)'
             }}>
               <video autoPlay muted loop playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }}>
                 <source src="/coding.mp4" type="video/mp4" />
               </video>
               <div style={{
                 position: 'absolute', inset: 0,
-                background: 'linear-gradient(135deg, rgba(220,38,38,0.15), rgba(22,163,74,0.15))'
+                background: 'linear-gradient(135deg, rgba(220,38,38,0.15), rgba(124,58,237,0.15))'
               }} />
             </div>
           </motion.div>
@@ -138,24 +126,27 @@ export default function Hakkimizda() {
                 exit={{ opacity: 0, x: 60, scale: 0.95 }}
                 transition={{ duration: 0.5, delay: i * 0.15 }}
                 viewport={{ once: false }}
-                whileHover={{ borderColor: 'rgba(220,38,38,0.3)', scale: 1.02, x: 8 }}
+                whileHover={{ borderColor: 'rgba(220,38,38,0.4)', scale: 1.02, x: 8 }}
                 style={{
                   display: 'flex', gap: '1rem', marginBottom: '1.5rem',
                   padding: '1.5rem', borderRadius: '16px',
-                  border: '1px solid rgba(0,0,0,0.06)',
-                  background: '#f9fafb', cursor: 'default'
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  background: 'rgba(255,255,255,0.04)',
+                  backdropFilter: 'blur(10px)',
+                  cursor: 'default'
                 }}
               >
                 <span style={{ fontSize: '24px', color: '#dc2626', flexShrink: 0 }}>{item.icon}</span>
                 <div>
-                  <h4 style={{ color: '#111827', fontWeight: '700', fontSize: '16px', marginBottom: '4px' }}>{item.title}</h4>
-                  <p style={{ color: '#6b7280', fontSize: '14px', lineHeight: '1.6' }}>{item.desc}</p>
+                  <h4 style={{ color: 'white', fontWeight: '700', fontSize: '16px', marginBottom: '4px' }}>{item.title}</h4>
+                  <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '14px', lineHeight: '1.6' }}>{item.desc}</p>
                 </div>
               </motion.div>
             ))}
           </motion.div>
         </div>
 
+        {/* Sayaçlar */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem' }}>
           {[
             { target: 50, suffix: '+', label: 'Tamamlanan Proje', renk: '#dc2626' },
@@ -174,16 +165,19 @@ export default function Hakkimizda() {
               style={{
                 textAlign: 'center', padding: '2rem', borderRadius: '20px',
                 border: `1px solid ${item.renk}30`,
-                background: `${item.renk}08`, cursor: 'default'
+                background: `${item.renk}10`,
+                backdropFilter: 'blur(10px)',
+                cursor: 'default'
               }}
             >
               <div style={{
                 fontSize: '3.5rem', fontWeight: '900',
-                color: item.renk, marginBottom: '8px', fontFamily: 'monospace'
+                color: item.renk, marginBottom: '8px', fontFamily: 'monospace',
+                textShadow: `0 0 20px ${item.renk}60`
               }}>
                 <Counter target={item.target} suffix={item.suffix} />
               </div>
-              <div style={{ fontSize: '13px', color: '#6b7280', fontWeight: '500', letterSpacing: '1px' }}>
+              <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.5)', fontWeight: '500', letterSpacing: '1px', fontFamily: 'monospace' }}>
                 {item.label}
               </div>
             </motion.div>

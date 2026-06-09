@@ -8,7 +8,7 @@ const hizmetler = [
     baslik: 'Web Sitesi',
     aciklama: 'Modern, hızlı ve etkileyici web siteleri tasarlıyoruz.',
     renk: '#2563eb',
-    detay: 'Markanıza özel, modern ve hızlı web siteleri tasarlıyoruz. Next.js, React gibi güncel teknolojilerle SEO uyumlu, mobil öncelikli siteler üretiyoruz. Ziyaretçilerinizi müşteriye dönüştüren landing page\'lerden kurumsal sitelere kadar her ölçekte çözüm sunuyoruz.',
+    detay: 'Markanıza özel, modern ve hızlı web siteleri tasarlıyoruz. Next.js, React gibi güncel teknolojilerle SEO uyumlu, mobil öncelikli siteler üretiyoruz.',
     maddeler: ['Next.js & React ile modern yapı', 'SEO uyumlu & hızlı', 'Mobil öncelikli tasarım', 'Landing page & kurumsal site']
   },
   {
@@ -16,7 +16,7 @@ const hizmetler = [
     baslik: 'Mobil Uygulama',
     aciklama: 'iOS ve Android için kullanıcı dostu uygulamalar.',
     renk: '#16a34a',
-    detay: 'iOS ve Android için kullanıcı deneyimini ön planda tutan uygulamalar geliştiriyoruz. React Native ile tek kodla iki platforma hizmet veriyoruz. Fikrinizi App Store ve Google Play\'de hayata geçiriyoruz.',
+    detay: 'iOS ve Android için kullanıcı deneyimini ön planda tutan uygulamalar geliştiriyoruz. React Native ile tek kodla iki platforma hizmet veriyoruz.',
     maddeler: ['React Native ile çoklu platform', 'App Store & Google Play', 'Kullanıcı odaklı UX/UI', 'Hızlı prototip & geliştirme']
   },
   {
@@ -40,7 +40,7 @@ const hizmetler = [
     baslik: 'GEO / AEO',
     aciklama: 'Yapay zeka destekli içerik optimizasyonu.',
     renk: '#7c3aed',
-    detay: 'Yapay zeka arama motorlarında (ChatGPT, Gemini, Perplexity) markanızın öne çıkması için içerik optimizasyonu yapıyoruz. Geleceğin araması için bugünden hazırlanıyoruz.',
+    detay: 'Yapay zeka arama motorlarında markanızın öne çıkması için içerik optimizasyonu yapıyoruz. Geleceğin araması için bugünden hazırlanıyoruz.',
     maddeler: ['ChatGPT & Gemini optimizasyonu', 'AI arama görünürlüğü', 'İçerik stratejisi', 'Geleceğe hazır SEO']
   },
   {
@@ -74,7 +74,7 @@ function Card({ h, i }: { h: typeof hizmetler[0], i: number }) {
     const rotateX = (y - centerY) / 8
     const rotateY = (centerX - x) / 8
     card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`
-    card.style.boxShadow = `${(x - centerX) / 10}px ${(y - centerY) / 10}px 40px rgba(0,0,0,0.2)`
+    card.style.boxShadow = `${(x - centerX) / 10}px ${(y - centerY) / 10}px 40px rgba(0,0,0,0.4)`
   }
 
   function handleMouseLeave() {
@@ -82,7 +82,7 @@ function Card({ h, i }: { h: typeof hizmetler[0], i: number }) {
     const card = cardRef.current
     if (card) {
       card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale(1)'
-      card.style.boxShadow = '0 4px 20px rgba(0,0,0,0.08)'
+      card.style.boxShadow = `0 4px 20px rgba(0,0,0,0.3)`
     }
   }
 
@@ -98,10 +98,12 @@ function Card({ h, i }: { h: typeof hizmetler[0], i: number }) {
       onMouseLeave={handleMouseLeave}
       onClick={() => setAcik(!acik)}
       style={{
-        background: 'white', borderRadius: '20px', overflow: 'hidden',
+        background: 'rgba(255,255,255,0.05)',
+        backdropFilter: 'blur(10px)',
+        borderRadius: '20px', overflow: 'hidden',
         cursor: 'pointer', transition: 'box-shadow 0.15s ease',
-        boxShadow: acik ? `0 20px 60px ${h.renk}33` : '0 4px 20px rgba(0,0,0,0.08)',
-        border: acik ? `1.5px solid ${h.renk}55` : '1px solid rgba(0,0,0,0.06)',
+        boxShadow: acik ? `0 20px 60px ${h.renk}44` : '0 4px 20px rgba(0,0,0,0.3)',
+        border: acik ? `1.5px solid ${h.renk}66` : '1px solid rgba(255,255,255,0.1)',
       }}
     >
       <AnimatePresence mode="wait">
@@ -119,23 +121,22 @@ function Card({ h, i }: { h: typeof hizmetler[0], i: number }) {
                 alt={h.baslik}
                 whileHover={{ scale: 1.1 }}
                 transition={{ duration: 0.4 }}
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.7 }}
               />
               <div style={{
                 position: 'absolute', inset: 0,
-                background: 'linear-gradient(transparent 60%, rgba(0,0,0,0.2))',
-                pointerEvents: 'none'
+                background: `linear-gradient(transparent 40%, rgba(0,0,0,0.6))`,
               }} />
               <div style={{
                 position: 'absolute', bottom: '10px', right: '10px',
-                background: 'white', borderRadius: '20px',
+                background: h.renk, borderRadius: '20px',
                 padding: '4px 12px', fontSize: '11px', fontWeight: '600',
-                color: h.renk, opacity: 0.9
+                color: 'white', fontFamily: 'monospace'
               }}>Detaylar →</div>
             </div>
             <div style={{ padding: '1.5rem' }}>
-              <h3 style={{ fontSize: '18px', fontWeight: '700', color: '#111827', marginBottom: '8px' }}>{h.baslik}</h3>
-              <p style={{ fontSize: '14px', color: '#6b7280', lineHeight: '1.6' }}>{h.aciklama}</p>
+              <h3 style={{ fontSize: '18px', fontWeight: '700', color: 'white', marginBottom: '8px' }}>{h.baslik}</h3>
+              <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.5)', lineHeight: '1.6' }}>{h.aciklama}</p>
               <div style={{ marginTop: '1rem', width: '40px', height: '3px', borderRadius: '2px', background: h.renk }} />
             </div>
           </motion.div>
@@ -151,7 +152,8 @@ function Card({ h, i }: { h: typeof hizmetler[0], i: number }) {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
               <div style={{
                 width: '48px', height: '48px', borderRadius: '12px',
-                background: h.renk + '22', display: 'flex', alignItems: 'center', justifyContent: 'center'
+                background: h.renk + '33', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                border: `1px solid ${h.renk}44`
               }}>
                 <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: h.renk }} />
               </div>
@@ -160,19 +162,19 @@ function Card({ h, i }: { h: typeof hizmetler[0], i: number }) {
                 whileTap={{ scale: 0.9 }}
                 onClick={(e) => { e.stopPropagation(); setAcik(false) }}
                 style={{
-                  background: '#f3f4f6', border: 'none', borderRadius: '50%',
+                  background: 'rgba(255,255,255,0.1)', border: 'none', borderRadius: '50%',
                   width: '32px', height: '32px', cursor: 'pointer',
-                  fontSize: '18px', color: '#6b7280', display: 'flex',
+                  fontSize: '18px', color: 'white', display: 'flex',
                   alignItems: 'center', justifyContent: 'center'
                 }}
               >×</motion.button>
             </div>
             <h3 style={{
-              fontSize: '24px', fontWeight: '900', color: '#111827',
-              marginBottom: '1rem', background: `linear-gradient(135deg, ${h.renk}, #111827)`,
+              fontSize: '24px', fontWeight: '900', marginBottom: '1rem',
+              background: `linear-gradient(135deg, ${h.renk}, #ffffff)`,
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'
             }}>{h.baslik}</h3>
-            <p style={{ fontSize: '14px', color: '#6b7280', lineHeight: '1.8', marginBottom: '1.5rem' }}>{h.detay}</p>
+            <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.6)', lineHeight: '1.8', marginBottom: '1.5rem' }}>{h.detay}</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {h.maddeler.map((madde: string, j: number) => (
                 <motion.div
@@ -183,11 +185,11 @@ function Card({ h, i }: { h: typeof hizmetler[0], i: number }) {
                   style={{
                     display: 'flex', alignItems: 'center', gap: '10px',
                     padding: '8px 12px', borderRadius: '8px',
-                    background: h.renk + '0a'
+                    background: h.renk + '15', border: `1px solid ${h.renk}22`
                   }}
                 >
                   <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: h.renk, flexShrink: 0 }} />
-                  <span style={{ fontSize: '13px', color: '#374151', fontWeight: '500' }}>{madde}</span>
+                  <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.8)', fontWeight: '500' }}>{madde}</span>
                 </motion.div>
               ))}
             </div>
@@ -200,7 +202,7 @@ function Card({ h, i }: { h: typeof hizmetler[0], i: number }) {
                 background: h.renk, borderRadius: '50px',
                 color: 'white', fontWeight: '600', fontSize: '14px',
                 textAlign: 'center', cursor: 'pointer',
-                boxShadow: `0 8px 24px ${h.renk}44`
+                boxShadow: `0 8px 24px ${h.renk}44`, fontFamily: 'monospace'
               }}
             >Teklif Al →</motion.div>
           </motion.div>
@@ -212,7 +214,11 @@ function Card({ h, i }: { h: typeof hizmetler[0], i: number }) {
 
 export default function Hizmetler() {
   return (
-    <section id="hizmetler" style={{ padding: '8rem 2rem', background: '#ffffff', position: 'relative', zIndex: 1 }}>
+    <section id="hizmetler" style={{
+      padding: '8rem 2rem',
+      background: 'transparent',
+      position: 'relative', zIndex: 1
+    }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <motion.div
           initial={{ opacity: 0, y: 60 }}
@@ -230,9 +236,9 @@ export default function Hizmetler() {
             viewport={{ once: false }}
             style={{
               display: 'inline-block', padding: '6px 20px', borderRadius: '50px',
-              border: '1px solid rgba(220,38,38,0.3)', color: '#dc2626',
+              border: '1px solid rgba(220,38,38,0.4)', color: '#dc2626',
               fontSize: '12px', fontWeight: '600', letterSpacing: '3px',
-              textTransform: 'uppercase', marginBottom: '1.5rem'
+              textTransform: 'uppercase', marginBottom: '1.5rem', fontFamily: 'monospace'
             }}
           >Neler Yapıyoruz</motion.span>
           <motion.h2
@@ -241,7 +247,10 @@ export default function Hizmetler() {
             exit={{ opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: false }}
-            style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: '900', color: '#111827' }}
+            style={{
+              fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: '900',
+              color: 'white', fontFamily: 'monospace'
+            }}
           >Hizmetlerimiz</motion.h2>
         </motion.div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>

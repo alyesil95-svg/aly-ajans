@@ -1,6 +1,6 @@
 'use client'
 import { motion, useInView } from 'framer-motion'
-import { useRef, useEffect } from 'react'
+import { useRef } from 'react'
 
 const adimlar = [
   {
@@ -46,7 +46,8 @@ function AdimKart({ adim, isLeft }) {
       ref={ref}
       whileHover={{ scale: 1.02, y: -4 }}
       style={{
-        background: 'white',
+        background: 'rgba(255,255,255,0.04)',
+        backdropFilter: 'blur(10px)',
         borderRadius: '20px',
         padding: '2rem',
         border: `1px solid ${adim.renk}33`,
@@ -62,23 +63,23 @@ function AdimKart({ adim, isLeft }) {
         top: '-20px', [isLeft ? 'left' : 'right']: '-20px',
         width: '120px', height: '120px',
         borderRadius: '50%',
-        background: `${adim.renk}12`,
+        background: `${adim.renk}10`,
         pointerEvents: 'none'
       }} />
 
       <div style={{
         fontSize: '52px', fontWeight: '900',
-        color: `${adim.renk}20`, fontFamily: 'monospace',
+        color: `${adim.renk}25`, fontFamily: 'monospace',
         lineHeight: 1, marginBottom: '0.5rem'
       }}>{adim.numara}</div>
 
       <h3 style={{
         fontSize: '22px', fontWeight: '800',
-        color: '#111827', marginBottom: '0.75rem'
+        color: 'white', marginBottom: '0.75rem'
       }}>{adim.baslik}</h3>
 
       <p style={{
-        fontSize: '14px', color: '#6b7280',
+        fontSize: '14px', color: 'rgba(255,255,255,0.55)',
         lineHeight: '1.7', marginBottom: '1.25rem'
       }}>{adim.aciklama}</p>
 
@@ -100,10 +101,9 @@ function AdimKart({ adim, isLeft }) {
           >
             <div style={{
               width: '6px', height: '6px',
-              borderRadius: '50%', background: adim.renk,
-              flexShrink: 0
+              borderRadius: '50%', background: adim.renk, flexShrink: 0
             }} />
-            <span style={{ fontSize: '12px', color: '#374151', fontWeight: '500' }}>{d}</span>
+            <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.7)', fontWeight: '500', fontFamily: 'monospace' }}>{d}</span>
           </motion.div>
         ))}
       </div>
@@ -131,11 +131,7 @@ function Adim({ adim, index, toplam }) {
   const isLeft = index % 2 === 0
 
   return (
-    <div ref={ref} style={{
-      display: 'grid',
-      gridTemplateColumns: '1fr 80px 1fr',
-      alignItems: 'center',
-    }}>
+    <div ref={ref} style={{ display: 'grid', gridTemplateColumns: '1fr 80px 1fr', alignItems: 'center' }}>
       <motion.div
         initial={{ opacity: 0, x: -80 }}
         animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -80 }}
@@ -153,11 +149,7 @@ function Adim({ adim, index, toplam }) {
             initial={{ scaleY: 0 }}
             animate={inView ? { scaleY: 1 } : { scaleY: 0 }}
             transition={{ duration: 0.6 }}
-            style={{
-              width: '2px', height: '60px',
-              background: `linear-gradient(180deg, transparent, ${adim.renk})`,
-              transformOrigin: 'top'
-            }}
+            style={{ width: '2px', height: '60px', background: `linear-gradient(180deg, transparent, ${adim.renk})`, transformOrigin: 'top' }}
           />
         )}
         {index === 0 && <div style={{ height: '60px' }} />}
@@ -169,7 +161,8 @@ function Adim({ adim, index, toplam }) {
           style={{
             width: '60px', height: '60px', borderRadius: '50%',
             border: `2px solid ${adim.renk}`,
-            background: '#ffffff',
+            background: 'rgba(0,0,0,0.5)',
+            backdropFilter: 'blur(10px)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             boxShadow: `0 0 25px ${adim.renk}60, 0 0 50px ${adim.renk}30`,
             position: 'relative', zIndex: 2, flexShrink: 0
@@ -187,11 +180,7 @@ function Adim({ adim, index, toplam }) {
             initial={{ scaleY: 0 }}
             animate={inView ? { scaleY: 1 } : { scaleY: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            style={{
-              width: '2px', height: '60px',
-              background: `linear-gradient(180deg, ${adim.renk}, transparent)`,
-              transformOrigin: 'top'
-            }}
+            style={{ width: '2px', height: '60px', background: `linear-gradient(180deg, ${adim.renk}, transparent)`, transformOrigin: 'top' }}
           />
         )}
         {index === toplam - 1 && <div style={{ height: '60px' }} />}
@@ -212,99 +201,12 @@ function Adim({ adim, index, toplam }) {
 }
 
 export default function Surec() {
-  const canvasRef = useRef(null)
-  const sectionRef = useRef(null)
-
-  useEffect(() => {
-    const canvas = canvasRef.current
-    const section = sectionRef.current
-    if (!canvas || !section) return
-    const ctx = canvas.getContext('2d')
-
-    function resize() {
-      canvas.width = section.offsetWidth
-      canvas.height = section.offsetHeight
-    }
-    resize()
-
-    const dots = []
-    for (let i = 0; i < 150; i++) {
-      dots.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        dx: (Math.random() - 0.5) * 1,
-        dy: (Math.random() - 0.5) * 1,
-        r: Math.random() * 3 + 1,
-        color: ['rgba(220,38,38,', 'rgba(22,163,74,', 'rgba(37,99,235,'][Math.floor(Math.random() * 3)]
-      })
-    }
-
-    let mouse = { x: canvas.width / 2, y: canvas.height / 2 }
-    section.addEventListener('mousemove', e => {
-      const rect = canvas.getBoundingClientRect()
-      mouse.x = e.clientX - rect.left
-      mouse.y = e.clientY - rect.top
-    })
-
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-      dots.forEach(function(dot, i) {
-        const distToMouse = Math.sqrt((dot.x - mouse.x) ** 2 + (dot.y - mouse.y) ** 2)
-        if (distToMouse < 120) {
-          const angle = Math.atan2(dot.y - mouse.y, dot.x - mouse.x)
-          dot.x += Math.cos(angle) * 2
-          dot.y += Math.sin(angle) * 2
-        }
-        dot.x += dot.dx
-        dot.y += dot.dy
-        if (dot.x < 0 || dot.x > canvas.width) dot.dx *= -1
-        if (dot.y < 0 || dot.y > canvas.height) dot.dy *= -1
-
-        ctx.beginPath()
-        ctx.arc(dot.x, dot.y, dot.r, 0, Math.PI * 2)
-        ctx.fillStyle = dot.color + '0.9)'
-        ctx.fill()
-
-        for (let j = i + 1; j < dots.length; j++) {
-          const dx = dots[j].x - dot.x
-          const dy = dots[j].y - dot.y
-          const dist = Math.sqrt(dx * dx + dy * dy)
-          if (dist < 130) {
-            const alpha = (1 - dist / 130) * 0.8
-            ctx.beginPath()
-            ctx.moveTo(dot.x, dot.y)
-            ctx.lineTo(dots[j].x, dots[j].y)
-            ctx.strokeStyle = dot.color + alpha + ')'
-            ctx.lineWidth = (1 - dist / 130) * 2
-            ctx.stroke()
-          }
-        }
-      })
-      requestAnimationFrame(draw)
-    }
-    draw()
-
-    window.addEventListener('resize', resize)
-    return function() { window.removeEventListener('resize', resize) }
-  }, [])
-
   return (
-    <section ref={sectionRef} id="surec" style={{
-      background: '#f8faff',
+    <section id="surec" style={{
       padding: '8rem 2rem',
-      position: 'relative',
-      overflow: 'hidden'
+      background: 'transparent',
+      position: 'relative', zIndex: 1
     }}>
-      <canvas
-        ref={canvasRef}
-        style={{
-          position: 'absolute', top: 0, left: 0,
-          width: '100%', height: '100%',
-          pointerEvents: 'none',
-          opacity: 1
-        }}
-      />
-
       <div style={{ maxWidth: '900px', margin: '0 auto', position: 'relative', zIndex: 10 }}>
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -322,9 +224,10 @@ export default function Surec() {
             transition={{ duration: 0.5 }}
             style={{
               display: 'inline-block', padding: '6px 20px',
-              borderRadius: '50px', border: '1px solid rgba(220,38,38,0.3)',
+              borderRadius: '50px', border: '1px solid rgba(220,38,38,0.4)',
               color: '#dc2626', fontSize: '12px', fontWeight: '600',
-              letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '1.5rem'
+              letterSpacing: '3px', textTransform: 'uppercase',
+              marginBottom: '1.5rem', fontFamily: 'monospace'
             }}
           >Süreç</motion.span>
           <motion.h2
@@ -335,7 +238,8 @@ export default function Surec() {
             transition={{ duration: 0.6, delay: 0.1 }}
             style={{
               fontSize: 'clamp(2rem, 5vw, 4rem)',
-              fontWeight: '900', color: '#111827', marginBottom: '1rem'
+              fontWeight: '900', color: 'white',
+              marginBottom: '1rem', fontFamily: 'monospace'
             }}
           >Nasıl Çalışırız?</motion.h2>
           <motion.p
@@ -344,7 +248,7 @@ export default function Surec() {
             exit={{ opacity: 0 }}
             viewport={{ once: false }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            style={{ color: '#6b7280', fontSize: '16px', maxWidth: '500px', margin: '0 auto' }}
+            style={{ color: 'rgba(255,255,255,0.5)', fontSize: '16px', maxWidth: '500px', margin: '0 auto', fontFamily: 'monospace' }}
           >
             4 adımda markanızı dijital dünyada zirveye taşıyoruz.
           </motion.p>
